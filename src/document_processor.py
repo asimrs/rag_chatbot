@@ -27,7 +27,7 @@ def process_pdf(source):
    return split_documents(unscanned_documents)
 
 
-   def process_image(source):
+def process_image(source):
    # Extract text from image using OCR
    with open(source, "rb") as image_file:
        image_bytes = image_file.read()
@@ -37,7 +37,7 @@ def process_pdf(source):
    return split_documents(documents)
 
 
-   def split_documents(documents):
+def split_documents(documents):
    # Split documents into smaller chunks for processing
    text_splitter = RecursiveCharacterTextSplitter.from_language(
        language=Language.PYTHON, chunk_size=1000, chunk_overlap=200
@@ -45,7 +45,7 @@ def process_pdf(source):
    return text_splitter.split_documents(documents)
 
 
-   def process_document(source):
+def process_document(source):
    # Determine file type and process accordingly
    if source.lower().endswith(".pdf"):
        return process_pdf(source)
