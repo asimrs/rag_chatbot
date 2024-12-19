@@ -8,7 +8,6 @@ from src.rag_chain import create_rag_chain
 load_dotenv()
 
 st.set_page_config(page_title="RAG Chatbot", page_icon="🤖")
-
 st.title("RAG Chatbot")
 
 # Initialize session state
@@ -23,7 +22,6 @@ with st.sidebar:
 
 # File uploader
 uploaded_file = st.file_uploader("Choose a file", type=["pdf", "png", "jpg", "jpeg"])
-
 if uploaded_file is not None:
     if st.button("Process File"):
         if api_key:
@@ -31,14 +29,11 @@ if uploaded_file is not None:
                 # Save the uploaded file temporarily
                 with open(uploaded_file.name, "wb") as f:
                     f.write(uploaded_file.getbuffer())
-
                 try:
                     # Process the document
                     chunks = process_document(uploaded_file.name)
-
                     # Create RAG chain
                     st.session_state.rag_chain = create_rag_chain(chunks)
-
                     st.success("File processed successfully!")
                 except ValueError as e:
                     st.error(str(e))
@@ -50,12 +45,10 @@ if uploaded_file is not None:
 
 # Query input
 query = st.text_input("Ask a question about the uploaded document")
-
 if st.button("Ask"):
     if st.session_state.rag_chain and query:
         with st.spinner("Generating answer..."):
             result = st.session_state.rag_chain.invoke(query)
-
             st.subheader("Answer:")
             st.write(result)
     elif not st.session_state.rag_chain:
